@@ -5,9 +5,3 @@
 **/__pycache__/
 2关/.catkin_workspace
 2关/src/CMakeLists.txt
-
-# 只保留第一关，其余关卡仅本地留存，不纳入版本控制
-/2关/
-/3关/
-/4关/
-/5关/
