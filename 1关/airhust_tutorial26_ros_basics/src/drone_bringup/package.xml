@@ -8,10 +8,17 @@
   <license>MIT</license>
 
   <buildtool_depend>catkin</buildtool_depend>
-
+<!--
   <build_depend>roscpp</build_depend>
   <build_depend>drone_backend</build_depend>
+ --> 
+  <depend>roscpp</depend>
+  <depend>drone_backend</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
 
+<!--  
   <exec_depend>roscpp</exec_depend>
   <exec_depend>drone_backend</exec_depend>
+-->
 </package>
