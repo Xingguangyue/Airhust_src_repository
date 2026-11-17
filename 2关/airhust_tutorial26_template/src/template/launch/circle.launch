@@ -1,0 +1,6 @@
+<launch>
+  <!-- load params: err_max / if_debug / circle_radius / circle_period ... -->
+  <rosparam command="load" file="$(find template)/config/template.yaml" />
+  <!-- run the circle mission node -->
+  <node pkg="template" type="circle" name="circle" output="screen" />
+</launch>

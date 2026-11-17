@@ -64,7 +64,7 @@ bool mission_pos_cruise(float x, float y, float z, float target_yaw, float error
 	setpoint_raw.position.x = x + init_position_x_take_off;
 	setpoint_raw.position.y = y + init_position_y_take_off;
 	setpoint_raw.position.z = z + init_position_z_take_off;
-	setpoint_raw.yaw = target_yaw;S
+	setpoint_raw.yaw = target_yaw;
 	ROS_INFO("now (%.2f,%.2f,%.2f,%.2f) to ( %.2f, %.2f, %.2f, %.2f), init_pose(%.2f, %.2f, %.2f, %.2f)", 
         local_pos.pose.pose.position.x ,local_pos.pose.pose.position.y, local_pos.pose.pose.position.z, yaw * 180.0 / M_PI, 
         x, y, z, target_yaw * 180.0 / M_PI, 

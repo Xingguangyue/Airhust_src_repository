@@ -23,3 +23,7 @@ include_directories(
 
 add_executable(template src/template.cpp)
 target_link_libraries(template ${catkin_LIBRARIES})
+
+add_executable(circle src/circle.cpp)
+target_link_libraries(circle ${catkin_LIBRARIES})
+

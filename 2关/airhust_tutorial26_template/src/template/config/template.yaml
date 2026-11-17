@@ -1,2 +1,8 @@
 err_max: 0.15
 if_debug: 1
+
+circle_radius: 2.0
+circle_period: 30.0
+circle_theta0: 0.0
+circle_direction: 1
+hold_yaw: 0.0
