@@ -1,0 +1,5 @@
+path: /home/airhust/airhust_tutorial2026_ws/3关/airhust_tutorial26_vision_lab/src/lab_vision_sim_task4/task5_work/dataset
+train: images/train
+val: images/val
+names:
+  0: logo
