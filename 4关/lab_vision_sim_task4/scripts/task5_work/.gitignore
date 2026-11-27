@@ -6,9 +6,10 @@ data/snap_test/
 data/dataset/
 out/
 
-# 权重
+# 权重：仓库自带 weights/best.pt，训练产物不进
 yolov8n.pt
 *.pt
+!weights/best.pt
 
 # 杂项
 __pycache__/

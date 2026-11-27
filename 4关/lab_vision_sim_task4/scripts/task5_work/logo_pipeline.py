@@ -28,7 +28,8 @@
   data/snap_test/        分布外测试截图（自动拍）
   data/dataset/          images/ labels/ logo.yaml（全自动）
   out/preview/           抽检图、推理图、伪标签预览
-  out/runs/              训练产物
+  out/runs/              训练产物（不进 git）
+  weights/best.pt        仓库自带的权重，clone 下来就能直接跑
 """
 
 import argparse
@@ -63,11 +64,18 @@ PRETRAINED = HERE / "yolov8n.pt"
 
 
 def _best():
-    """最新一版权重。ultralytics 有时会在 project 下再套一层 detect/，扫一遍最省事。"""
+    """权重。优先用自己训练出来的最新一版，没有就退回仓库自带的那份。
+
+    out/runs/    训练产物，不进 git
+    weights/     仓库自带，clone 下来就能直接跑飞行，不用先训一遍
+    """
     if RUNS.exists():
         cands = list(RUNS.rglob("best.pt"))
         if cands:
             return str(max(cands, key=lambda p: p.stat().st_mtime))
+    bundled = HERE / "weights" / "best.pt"
+    if bundled.exists():
+        return str(bundled)
     return str(RUNS / "v1" / "weights" / "best.pt")
 
 

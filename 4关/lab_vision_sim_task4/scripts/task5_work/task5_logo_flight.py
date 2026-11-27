@@ -22,8 +22,12 @@ from ultralytics import YOLO
 # 权重路径自动挑最新的一版，别再写死
 _TW = os.path.dirname(os.path.abspath(__file__))
 _c = glob.glob(os.path.join(_TW, "out", "runs", "**", "best.pt"), recursive=True)
-WEIGHTS = max(_c, key=os.path.getmtime) if _c else os.path.join(
-    _TW, "out", "runs", "v1", "weights", "best.pt")
+if _c:
+    WEIGHTS = max(_c, key=os.path.getmtime)
+else:                      # 没有训练产物就用仓库自带的
+    _b = os.path.join(_TW, "weights", "best.pt")
+    WEIGHTS = _b if os.path.exists(_b) else os.path.join(
+        _TW, "out", "runs", "v1", "weights", "best.pt")
 Z = 1.5
 IMGSZ = 416          # 必须和训练时一致
 CONF = 0.4
