@@ -1,23 +1,17 @@
-# 数据与中间产物（可由脚本重新生成）
-dataset/
-backgrounds/
-backgrounds_clean/
-bg_with_logo/
-preview/
-infer_out/
-snap_raw/
-snap_lab/
-snap_preview/
-newtest/
+# 数据产物，都能用 logo_pipeline.py / snap_tour.py 重跑出来
+data/bg/
+data/synth/
+data/snap/
+data/snap_test/
+data/dataset/
+out/
+
+# 权重
+yolov8n.pt
+*.pt
+
+# 杂项
 __pycache__/
 *.pyc
 *.bak
 train.log
-yolov8n.pt
-orange_mask.png
-orange_cut.png
-
-# 训练产物：只保留权重和指标表
-runs/**/*.png
-runs/**/*.jpg
-runs/**/last.pt

@@ -7,6 +7,9 @@
     detect_timer 5Hz   独立线程推理，写 det
     主循环       20Hz  发 setpoint，不能断
 """
+import glob
+import os
+
 import rospy
 import cv2
 from geometry_msgs.msg import PoseStamped
@@ -16,8 +19,11 @@ from mavros_msgs.msg import State
 from mavros_msgs.srv import CommandBool, SetMode
 from ultralytics import YOLO
 
-WEIGHTS = ("/home/airhust/airhust_tutorial2026_ws/3关/airhust_tutorial26_vision_lab"
-           "/src/lab_vision_sim_task4/task5_work/runs/detect/v1/weights/best.pt")
+# 权重路径自动挑最新的一版，别再写死
+_TW = os.path.dirname(os.path.abspath(__file__))
+_c = glob.glob(os.path.join(_TW, "out", "runs", "**", "best.pt"), recursive=True)
+WEIGHTS = max(_c, key=os.path.getmtime) if _c else os.path.join(
+    _TW, "out", "runs", "v1", "weights", "best.pt")
 Z = 1.5
 IMGSZ = 416          # 必须和训练时一致
 CONF = 0.4
