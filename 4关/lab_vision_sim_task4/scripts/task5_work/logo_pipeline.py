@@ -1,36 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""第五关 · logo 检测全流程（单文件，7 个子命令）
-
-标签从哪来（这一版的核心改动）：
-  合成图   贴图矩形就是真值。data/logo_cut.png 的不透明外接框 == 整幅图，
-           所以贴上去的 (px, py, tw, th) 原样就是 YOLO 要的框。
-           不去画面里找颜色，误差 0，也不会因为背景有橙色而丢样本。
-  真实截图 没有这个便利，两条路：
-             label --manual   自己拖框，绝对真值，60 张约 3 分钟
-             label --auto     用已训练权重出伪标签（先拿纯合成数据训 v0）
-
-子命令：
-  cut     白底 logo -> 透明 RGBA（按 min(R,G,B) 反算 alpha，不碰色相）
-  bg      背景池检查。默认原色不动，--tint 才洗成冷色单色
-  synth   合成训练集
-  label   真实截图打标（--manual / --auto 二选一）
-  pack    汇总 dataset（合成 + 真实 + 负样本），顺手写 logo.yaml
-  train   CPU 训练
-  infer   离线推理，画框落到 out/preview/
-
-目录：
-  data/logo.png          data/logo_cut.png
-  data/bg/               背景原图（往这里扔照片）
-  data/bg/clean/         去色版（只有 bg --tint 才生成）
-  data/synth/            合成图 a.jpg + a.txt（自动）
-  data/snap/             真实截图 a.jpg + a.txt（自动拍 / 手工标）
-  data/snap_test/        分布外测试截图（自动拍）
-  data/dataset/          images/ labels/ logo.yaml（全自动）
-  out/preview/           抽检图、推理图、伪标签预览
-  out/runs/              训练产物（不进 git）
-  weights/best.pt        仓库自带的权重，clone 下来就能直接跑
-"""
 
 import argparse
 import random
@@ -40,6 +9,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+from ultralytics import YOLO
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -485,7 +455,7 @@ def cmd_infer(a):
     files = sorted(src.glob("*.jpg"))
     if not files:
         sys.exit("%s 里没有 jpg" % src)
-    from ultralytics import YOLO
+
     PREVIEW.mkdir(parents=True, exist_ok=True)
     model = YOLO(str(a.weights))
 
@@ -523,8 +493,6 @@ def main():
     sub.add_parser("cut", help="白底 logo -> 透明 PNG").set_defaults(func=cmd_cut)
 
     p = sub.add_parser("bg", help="背景池检查（默认保持原色）")
-    p.add_argument("--tint", action="store_true",
-                   help="把背景洗成冷色单色，去掉橙色")
     p.set_defaults(func=cmd_bg, tint=False)
 
     p = sub.add_parser("synth", help="合成训练集")
